@@ -1,0 +1,23 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: charge-fee-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+app:
+  fee:
+    other-account:
+      # fee = flat-fee + (amount x percentage / 100), rounded to 2 decimals (half up)
+      flat-fee: ${FEE_OTHER_FLAT:10.00}
+      # percentage is 0 to 100. 1.5 means 1.5 percent.
+      percentage: ${FEE_OTHER_PERCENTAGE:0.00}
+      # upper limit for the fee. 0 means no limit.
+      max-fee: ${FEE_OTHER_MAX:0.00}
