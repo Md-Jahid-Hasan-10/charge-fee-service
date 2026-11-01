@@ -2,6 +2,23 @@ server:
   port: 8085
 
 spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: charge-fee-service
+      auto-offset-reset: earliest
+      enable-auto-commit: false
+    listener:
+      ack-mode: record
+      concurrency: 3
+    producer:
+      acks: all
+      properties:
+        enable.idempotence: true
+        linger.ms: 0
+        max.block.ms: 5000
+        request.timeout.ms: 5000
+        delivery.timeout.ms: 10000
   application:
     name: charge-fee-service
 
@@ -13,6 +30,8 @@ eureka:
     prefer-ip-address: true
 
 app:
+  messaging:
+    producer-name: charge-fee-service
   fee:
     other-account:
       # fee = flat-fee + (amount x percentage / 100), rounded to 2 decimals (half up)
@@ -21,3 +40,14 @@ app:
       percentage: ${FEE_OTHER_PERCENTAGE:0.00}
       # upper limit for the fee. 0 means no limit.
       max-fee: ${FEE_OTHER_MAX:0.00}
+management:
+  server:
+    port: 18083
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
