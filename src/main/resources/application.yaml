@@ -42,7 +42,7 @@ app:
       max-fee: ${FEE_OTHER_MAX:0.00}
 management:
   server:
-    port: 18083
+    port: 18085
   endpoints:
     web:
       exposure:
