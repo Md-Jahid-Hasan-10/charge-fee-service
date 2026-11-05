@@ -530,3 +530,18 @@ curl -i http://localhost:8085/internal/fees/nope
 * **A repeated command produces a repeated event.** There is no idempotency table; the source comment says explicitly *"A pure calculation, so a repeated command gives an identical answer. Nothing to remember."* Downstream consumers have to tolerate the duplicate.
 * **The service does not validate that the accounts exist** or that the amount is affordable. It only uses the inputs to pick a rule and compute a number.
 * **`fee` is published as a JSON string** on `fee.events` (`@JsonFormat(shape = JsonFormat.Shape.STRING)`) to avoid float precision loss. A consumer must parse it as a decimal, not as a number.
+
+# Charge Fee Service
+
+**Part of the Banking Microservices Project**
+
+Developed and maintained by **Jahid Hasan**
+
+- **Author:** Jahid Hasan
+- **GitHub:** [Md-Jahid-Hasan-10](https://github.com/Md-Jahid-Hasan-10)
+- **Repository:** [charge-fee-service](https://github.com/Md-Jahid-Hasan-10/charge-fee-service)
+- **Project:** Banking Microservices
+- **Application Port:** `8085`
+- **Management/Metrics Port:** `18085`
+
+> A stateless fee calculation service that determines bank transfer charges based on configurable fee policies.
